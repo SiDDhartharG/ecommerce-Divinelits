@@ -3,34 +3,59 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
-
-  --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
-  --secondary-glow: linear-gradient(
-    to bottom right,
-    rgba(1, 65, 255, 0),
-    rgba(1, 65, 255, 0),
-    rgba(1, 65, 255, 0.3)
-  );
-
-  --tile-start-rgb: 2, 13, 46;
-  --tile-end-rgb: 2, 5, 19;
+  /* ===========================================
+     SIMPLIFIED DIVINELITS COLOR SYSTEM
+     =========================================== */
+  
+  /* === CORE COLORS === */
+  --color-primary: #b8860b;           /* Divine Gold */
+  --color-primary-dark: #8b6508;     /* Darker gold */
+  
+  /* === TEXT COLORS === */
+  --color-text: #2d2319;             /* Main text */
+  --color-text-light: #8a7a6a;       /* Light text */
+  
+  /* === BACKGROUND COLORS === */
+  --color-bg: #f3f2ee;                /* Main background */
+  --color-bg-card: #ffffff;          /* Card background */
+  
+  /* === BORDER COLORS === */
+  --color-border: #b8860b;           /* Main border */
+  --color-border-light: #e6d9a0;     /* Light border */
+  
+  /* === STATE COLORS === */
+  --color-success: #10b981;           /* Success green */
+  --color-error: #ef4444;            /* Error red */
+  
+  /* === SHADOWS === */
+  --color-shadow: rgba(184, 134, 11, 0.1);
+  --color-shadow-hover: rgba(184, 134, 11, 0.2);
+  
+  /* === GRADIENTS === */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  --gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(252, 248, 240, 0.8));
+  
+  /* === LEGACY SUPPORT === */
+  --foreground-rgb: 45, 35, 25;
+  --background-start-rgb: 252, 248, 240;
+  --background-end-rgb: 248, 244, 235;
+  --tile-start-rgb: 255, 253, 250;
+  --tile-end-rgb: 252, 248, 240;
+  --callout-rgb: 255, 253, 250;
+  --callout-border-rgb: 184, 134, 11;
+  --card-rgb: 255, 255, 255;
+  --card-border-rgb: 184, 134, 11;
+  
+  /* === TILE BORDER GRADIENT === */
   --tile-border: conic-gradient(
-    #ffffff80,
-    #ffffff40,
-    #ffffff30,
-    #ffffff20,
-    #ffffff10,
-    #ffffff10,
-    #ffffff80
+    rgba(184, 134, 11, 0.6),
+    rgba(184, 134, 11, 0.3),
+    rgba(184, 134, 11, 0.2),
+    rgba(184, 134, 11, 0.1),
+    rgba(184, 134, 11, 0.1),
+    rgba(184, 134, 11, 0.1),
+    rgba(184, 134, 11, 0.6)
   );
-
-  --callout-rgb: 20, 20, 20;
-  --callout-border-rgb: 108, 108, 108;
-  --card-rgb: 100, 100, 100;
-  --card-border-rgb: 200, 200, 200;
 }
 
 * {
@@ -45,13 +70,10 @@ body {
 }
 
 body {
-  color: #ededed;
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: var(--color-text);
+  background: var(--color-bg);
+  font-family: 'Georgia', 'Times New Roman', serif;
+  line-height: 1.6;
 }
 
 a {
@@ -86,13 +108,14 @@ main {
 .swiper-pagination-clickable .swiper-pagination-bullet {
   width: 15px;
   height: 1px;
-  background-color: #000;
+  background-color: var(--color-primary);
   opacity: 1;
   border-radius: 0;
 }
 
 .swiper-pagination-clickable .swiper-pagination-bullet-active {
   height: 3px;
+  background-color: var(--color-primary-dark);
 }
 
 @keyframes shine {
@@ -123,8 +146,182 @@ main {
   }
 }
 
+/* ===========================================
+   ELEGANT DIVINELITS COMPONENT STYLES
+   =========================================== */
+
+.elegant-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px var(--color-shadow);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.elegant-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px var(--color-shadow-hover);
+  border-color: var(--color-border);
+}
+
+.elegant-button {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px var(--color-shadow);
+}
+
+.elegant-button:hover {
+  background: var(--gradient-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--color-shadow-hover);
+}
+
+.elegant-text {
+  color: var(--color-text);
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.elegant-heading {
+  color: var(--color-text);
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.elegant-accent {
+  color: var(--color-primary);
+}
+
+/* ===========================================
+   TYPOGRAPHY SYSTEM
+   =========================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: var(--color-text);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* ===========================================
+   LINK STYLING
+   =========================================== */
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+  text-decoration-color: var(--color-primary);
+  text-underline-offset: 4px;
+}
+
+/* ===========================================
+   FORM STYLING
+   =========================================== */
+
+input, textarea, select {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: var(--color-text);
+  font-family: 'Georgia', 'Times New Roman', serif;
+  transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-shadow);
+  background: var(--color-bg-card);
+}
+
+/* ===========================================
+   SCROLLBAR STYLING
+   =========================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-dark);
+}
+
+/* ===========================================
+   SIMPLIFIED UTILITY CLASSES
+   =========================================== */
+
+/* Color Utilities */
+.text-primary { color: var(--color-primary); }
+.text-primary-dark { color: var(--color-primary-dark); }
+.text-light { color: var(--color-text-light); }
+
+.bg-primary { background-color: var(--color-primary); }
+.bg-card { background-color: var(--color-bg-card); }
+
+.border { border-color: var(--color-border); }
+.border-light { border-color: var(--color-border-light); }
+
+/* Gradient Utilities */
+.bg-gradient-primary { background: var(--gradient-primary); }
+.bg-gradient-card { background: var(--gradient-card); }
+
+/* Shadow Utilities */
+.shadow { box-shadow: 0 4px 15px var(--color-shadow); }
+.shadow-hover { box-shadow: 0 6px 20px var(--color-shadow-hover); }
+
+/* State Utilities */
+.text-success { color: var(--color-success); }
+.text-error { color: var(--color-error); }
+
+.bg-success { background-color: var(--color-success); }
+.bg-error { background-color: var(--color-error); }
+
+/* Interactive Utilities */
+.hover-lift:hover { transform: translateY(-2px); }
+.hover-shadow:hover { box-shadow: 0 6px 20px var(--color-shadow-hover); }
+
 @media (prefers-color-scheme: dark) {
   html {
-    color-scheme: dark;
+    color-scheme: light; /* Keep light theme for elegant look */
   }
 }

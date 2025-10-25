@@ -1,5 +1,17 @@
 import { Document, Schema } from "mongoose";
 
+export enum ProductStatus {
+  VISIBLE = "VISIBLE",
+  DELETED = "DELETED",
+  HIDE = "HIDE"
+}
+
+export enum ProductCategory {
+  CANDLES = "candles",
+  GIFT_BOX = "gift box",
+  NAMED_GIFT = "named gift"
+}
+
 export interface EnrichedOrders {
   name: string;
   email: string;
@@ -90,6 +102,7 @@ export interface ProductDocument extends Document {
   quantity: number;
   productId: Schema.Types.ObjectId;
   purchased: boolean;
+  status: ProductStatus;
 }
 
 export interface VariantsDocument {
@@ -104,6 +117,7 @@ export interface UserDocument {
   phone: string;
   address: AddressDocument;
   image: string;
+  isAdmin: boolean;
   _id: string;
   createdAt: Date;
   updatedAt: Date;

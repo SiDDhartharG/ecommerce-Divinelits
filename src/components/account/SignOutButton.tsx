@@ -6,7 +6,7 @@ import { signOut } from "next-auth/react";
 const SignOutButton = () => {
   return (
     <button
-      className="flex items-center w-full h-full"
+      className="flex items-center w-full h-full px-3 py-2 text-divine-text-600 hover:text-divine-gold-600 transition-colors duration-200"
       onClick={() => signOut()}
     >
       <svg
@@ -15,7 +15,7 @@ const SignOutButton = () => {
         strokeLinejoin="round"
         viewBox="0 0 16 16"
         width="16"
-        className="mr-2"
+        className="mr-3 text-divine-gold-500"
         style={{ color: "currentColor" }}
       >
         <path
@@ -25,7 +25,7 @@ const SignOutButton = () => {
           fill="currentColor"
         ></path>
       </svg>
-      <span>Log out</span>
+      <span className="font-medium">Log out</span>
     </button>
   );
 };

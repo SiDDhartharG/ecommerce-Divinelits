@@ -57,7 +57,7 @@ export default function AddToCart({
           {product.sizes.map((size, index) => (
             <button
               key={index}
-              className={`flex items-center justify-center border border-solid border-border-primary px-1 py-1.5 bg-black rounded transition duration-150 ease hover:border-border-secondary text-13 ${
+              className={`flex items-center justify-center border border-solid px-1 py-1.5 bg-black rounded transition duration-150 ease hover:border-primary text-13 ${
                 selectedSize === size ? "bg-white text-black" : ""
               }`}
               onClick={() => setSelectedSize(size)}
@@ -70,9 +70,9 @@ export default function AddToCart({
           {product.variants.map((variant, index) => (
             <button
               key={index}
-              className={`border border-solid border-border-primary w-8 h-8 flex justify-center relative rounded transition duration-150 ease hover:border-border-secondary ${
+              className={`border border-solid w-8 h-8 flex justify-center relative rounded transition duration-150 ease hover:border-primary ${
                 selectedVariant?.color === variant.color
-                  ? "border-border-secondary"
+                  ? "border-primary"
                   : ""
               }`}
               style={{ backgroundColor: colorMapping[variant.color] }}
@@ -94,11 +94,11 @@ export default function AddToCart({
         </div>
       </div>
 
-      <div className="border-t border-solid border-border-primary">
+      <div className="border-t border-solid border">
         <button
           type="submit"
           onClick={handleAddToCart}
-          className="w-full p-2 transition duration-150 text-13 ease hover:bg-color-secondary"
+          className="w-full p-2 transition duration-150 text-13 ease hover:bg-text-light"
         >
           {isPending ? <Loader height={20} width={20} /> : "Add To Cart"}
         </button>

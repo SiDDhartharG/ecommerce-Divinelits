@@ -1,4 +1,4 @@
-import { ProductDocument, VariantsDocument } from "@/types/types";
+import { ProductDocument, VariantsDocument, ProductStatus } from "@/types/types";
 import mongoose, { model, Model, Schema } from "mongoose";
 
 const VariantsSchema = new Schema<VariantsDocument>({
@@ -43,6 +43,12 @@ const ProductSchema: Schema = new Schema<ProductDocument>({
   },
   variants: {
     type: [VariantsSchema],
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: Object.values(ProductStatus),
+    default: ProductStatus.HIDE,
     required: true,
   },
 });

@@ -55,7 +55,7 @@ export const Products = async ({
         } = product;
         const productLink = `/${category}/${quantity ? productId : _id}`;
         const containerClassname = [
-          "flex justify-between border border-solid border-border-primary rounded-md overflow-hidden",
+          "flex justify-between border border-solid border rounded-md overflow-hidden",
           extraClassname === "cart-ord-mobile"
             ? "flex-row sm:flex-col"
             : "flex-col",
@@ -68,7 +68,7 @@ export const Products = async ({
             : "hover:scale-105 transition-all";
         const infoClassname = [
           extraClassname === "cart-ord-mobile" ? "w-6/12 sm:w-full" : "",
-          "flex justify-between flex-col gap-2.5 p-3.5 bg-background-secondary z-10",
+          "flex justify-between flex-col gap-2.5 p-3.5 bg-bg z-10",
         ]
           .filter(Boolean)
           .join(" ");

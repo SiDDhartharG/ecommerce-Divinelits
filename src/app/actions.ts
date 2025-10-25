@@ -2,13 +2,13 @@
 
 import { connectDB } from "@/libs/mongodb";
 import { Product } from "@/models/Products";
-import { EnrichedProducts } from "@/types/types";
+import { EnrichedProducts, ProductStatus } from "@/types/types";
 
 export const getAllProducts = async () => {
   try {
     await connectDB();
 
-    const products: EnrichedProducts[] = await Product.find();
+    const products: EnrichedProducts[] = await Product.find({ status: ProductStatus.VISIBLE });
     return products;
   } catch (error) {
     console.error("Error getting products:", error);
@@ -20,7 +20,7 @@ export const getCategoryProducts = async (category: string) => {
   try {
     await connectDB();
 
-    const products: EnrichedProducts[] = await Product.find({ category });
+    const products: EnrichedProducts[] = await Product.find({ category, status: ProductStatus.VISIBLE });
     return products;
   } catch (error) {
     console.error("Error getting products:", error);
@@ -41,7 +41,7 @@ export const getRandomProducts = async (productId: string) => {
   try {
     await connectDB();
 
-    const allProducts: EnrichedProducts[] = await Product.find();
+    const allProducts: EnrichedProducts[] = await Product.find({ status: ProductStatus.VISIBLE });
     const shuffledProducts = shuffleArray(allProducts);
     const randomProducts = shuffledProducts
       .filter((product) => product._id.toString() !== productId)
@@ -57,7 +57,7 @@ export const getProduct = async (_id: string) => {
   try {
     await connectDB();
 
-    const product = await Product.findOne({ _id });
+    const product = await Product.findOne({ _id, status: ProductStatus.VISIBLE });
     return product;
   } catch (error) {
     console.error("Error getting product:", error);
