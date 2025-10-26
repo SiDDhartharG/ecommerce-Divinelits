@@ -89,17 +89,17 @@ const OrderProducts = async ({ id }: { id: string }) => {
               <span>
                 {totalProducts} {productsText}
               </span>{" "}
-              <span>{(order.total_price / 100).toFixed(2)} €</span>
+              <span>₹{(order.total_price / 100).toFixed(2)}</span>
             </div>
             <div className={bxInfoStyles}>
               <span>Delivery</span> <span>FREE</span>
             </div>
             <div className={bxInfoStyles}>
-              <span>Total Discount</span> <span>0 €</span>
+              <span>Total Discount</span> <span>₹ 0</span>
             </div>
             <div className={bxInfoStyles}>
               <span>Total</span>{" "}
-              <span>{(order.total_price / 100).toFixed(2)} €</span>
+              <span>₹{(order.total_price / 100).toFixed(2)}</span>
             </div>
             <div className={bxInfoStyles}>(VAT included)</div>
           </div>
@@ -181,7 +181,7 @@ const AllOrderSkeleton = ({ items }: { items: number }) => {
             <span>Delivery</span> <span>FREE</span>
           </div>
           <div className={bxInfoStyles}>
-            <span>Total Discount</span> <span>0 €</span>
+            <span>Total Discount</span> <span>₹ 0</span>
           </div>
           <div className={bxInfoStyles}>
             <span>Total</span>{" "}

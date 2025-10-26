@@ -37,18 +37,17 @@ const Signin = () => {
         return router.push("/");
       }
     },
-    []
+    [router]
   );
 
   return (
     <section className="flex items-center justify-center w-full pt-12 xs:h-80vh">
       <form
-        className="p-6 xs:p-10	w-full max-w-350 flex flex-col justify-between items-center gap-2.5	
-                border border-solid border-[#2E2E2E] bg-[#0A0A0A] rounded-md"
+        className="elegant-card p-6 xs:p-10 w-full max-w-md flex flex-col justify-between items-center gap-4"
         onSubmit={handleSubmit}
       >
         {error && (
-          <div className="text-[#FF6166] flex items-center justify-center gap-2">
+          <div className="text-error flex items-center justify-center gap-2 p-3 bg-error/10 rounded-lg border border-error/20">
             <svg
               data-testid="geist-icon"
               height="16"
@@ -67,26 +66,26 @@ const Signin = () => {
             <div className="text-sm">{error}</div>
           </div>
         )}
-        <h1 className="w-full mb-5 text-2xl font-bold">Signin</h1>
+        <h1 className="elegant-heading w-full mb-6 text-3xl text-center">Sign In</h1>
 
-        <label className={labelStyles}>Email:</label>
+        <label className={`${labelStyles} elegant-text font-medium`}>Email:</label>
         <input
           type="email"
-          placeholder="Email"
-          className="w-full text-[#A1A1A1] h-8 border border-solid border-[#2E2E2E] py-1 px-2.5 rounded bg-black text-13"
+          placeholder="Enter your email"
+          className="w-full h-12 border border-light rounded-lg px-4 text-base bg-card focus:border-primary focus:outline-none focus:ring-3 focus:ring-primary/10 transition-all"
           name="email"
         />
 
-        <label className={labelStyles}>Password:</label>
+        <label className={`${labelStyles} elegant-text font-medium mt-2`}>Password:</label>
         <div className="flex w-full">
           <input
             type={showPassword ? "text" : "password"}
-            placeholder="Password"
-            className="w-full text-[#A1A1A1] h-8 border border-solid border-[#2E2E2E] py-1 px-2.5 rounded-l bg-black text-13"
+            placeholder="Enter your password"
+            className="w-full h-12 border border-light rounded-l-lg px-4 text-base bg-card border-r-0 focus:border-primary focus:outline-none transition-all"
             name="password"
           />
           <button
-            className="flex text-[#A1A1A1] items-center justify-center w-2/12 transition duration-150 bg-black border-r border-solid rounded-r border-y border-[#2E2E2E] ease hover:bg-[#1F1F1F]"
+            className="flex items-center justify-center w-12 h-12 transition-all border border-light rounded-r-lg bg-card border-l-0 hover:bg-primary/5 focus:outline-none focus:border-primary"
             onClick={(e) => {
               e.preventDefault();
               setShowPassword(!showPassword);
@@ -129,21 +128,21 @@ const Signin = () => {
           </button>
         </div>
         <button
-          className="w-full bg-black border border-solid border-[#2E2E2E] py-1.5 mt-2.5 rounded transition-all hover:bg-[#1F1F1F] hover:border-[#454545] text-13"
+          className="elegant-button w-full mt-4 h-12 text-base font-semibold"
           type="submit"
         >
-          Signup
+          Sign In
         </button>
 
-        <div className="relative flex items-center justify-center w-full h-10">
-          <div className="absolute w-full h-px top-2/4 bg-[#2E2E2E]"></div>
-          <p className="z-10 flex items-center justify-center w-8 h-6 bg-[#0A0A0A]">
+        <div className="relative flex items-center justify-center w-full h-10 my-4">
+          <div className="absolute w-full h-px top-2/4 bg-border-light"></div>
+          <p className="z-10 flex items-center justify-center px-4 h-6 bg-card elegant-text">
             or
           </p>
         </div>
 
         <button
-          className="flex text-[#A1A1A1] items-center gap-3 px-4 py-2 text-sm align-middle transition-all bg-black border border-solid rounded border-[#2E2E2E] ease hover:bg-[#1F1F1F] hover:border-[#454545]"
+          className="flex items-center justify-center gap-3 w-full px-4 py-3 text-base align-middle transition-all border border-light rounded-lg bg-card hover:bg-primary/5 hover:border-primary focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/10"
           onClick={(e) => {
             e.preventDefault();
             signIn("google");
@@ -174,14 +173,14 @@ const Signin = () => {
               d="M8.15982 3.18545C9.33802 3.18545 10.3853 3.59271 11.2216 4.37818L13.5125 2.0873C12.1234 0.792777 10.3199 0 8.15982 0C5.03257 0 2.33443 1.79636 1.01807 4.41455L3.67985 6.48001C4.31254 4.58908 6.07983 3.18545 8.15982 3.18545Z"
               fill="#EA4335"
             ></path>
-          </svg>{" "}
+          </svg>
           Sign in with Google
         </button>
         <Link
           href="/register"
-          className="text-sm transition duration-150 text-[#A1A1A1] ease hover:text-white"
+          className="text-sm mt-4 elegant-text hover:text-primary transition-colors"
         >
-          Don&apos;t have an account?
+          Don&apos;t have an account? <span className="text-primary font-medium">Sign up here</span>
         </Link>
       </form>
     </section>

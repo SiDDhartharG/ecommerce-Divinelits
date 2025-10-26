@@ -27,15 +27,15 @@ const ProductCartInfo = ({ product }: { product: EnrichedProducts }) => {
   const quantityButtons = useCallback(() => {
     if (purchased) {
       return (
-        <div className="text-sm">
-          {quantity ? (price * quantity).toFixed(2) : price}€
+        <div className="text-sm font-medium">
+          ₹{quantity ? (price * quantity).toFixed(2) : price}
         </div>
       );
     } else {
       return (
-        <div className="flex bg-black w-min">
+        <div className="flex bg-white border border-border-light rounded-lg overflow-hidden shadow-sm">
           <button
-            className="flex items-center justify-center w-8 h-8 p-2 border border-solid rounded-l text-[#A1A1A1] transition-all hover:text-white border-border-primary"
+            className="flex items-center justify-center w-10 h-10 p-2 text-text hover:bg-primary hover:text-white transition-all duration-200 border-r border-border-light"
             onClick={handleDelItem}
           >
             <svg
@@ -54,11 +54,11 @@ const ProductCartInfo = ({ product }: { product: EnrichedProducts }) => {
               ></path>
             </svg>
           </button>
-          <span className="flex items-center justify-center w-8 h-8 p-2 text-sm border-solid border-y border-border-primary">
+          <span className="flex items-center justify-center w-12 h-10 text-sm font-medium bg-card text-text border-r border-border-light">
             {quantity}
           </span>
           <button
-            className="flex items-center justify-center w-8 h-8 p-2 border border-solid rounded-r text-[#A1A1A1] transition-all hover:text-white border-border-primary"
+            className="flex items-center justify-center w-10 h-10 p-2 text-text hover:bg-primary hover:text-white transition-all duration-200"
             onClick={handleAddItem}
           >
             <svg
@@ -84,18 +84,18 @@ const ProductCartInfo = ({ product }: { product: EnrichedProducts }) => {
 
   return (
     <>
-      <div className="flex sm:hidden">
-        <div className="text-sm pr-2.5 border-r">{size}</div>
-        <div className="text-sm pl-2.5">{color}</div>
-      </div>
-      <div className="flex items-center justify-between sm:hidden">
+      <div className="flex sm:hidden items-center justify-between">
+        <div className="flex">
+          <div className="text-sm pr-2.5 border-r border-border-light text-text-light">{size}</div>
+          <div className="text-sm pl-2.5 text-text-light">{color}</div>
+        </div>
         {quantityButtons()}
       </div>
       <div className="items-center justify-between hidden sm:flex">
         {quantityButtons()}
         <div className="flex">
-          <div className="text-sm pr-2.5 border-r">{size}</div>
-          <div className="text-sm pl-2.5">{color}</div>
+          <div className="text-sm pr-2.5 border-r border-border-light text-text-light">{size}</div>
+          <div className="text-sm pl-2.5 text-text-light">{color}</div>
         </div>
       </div>
     </>

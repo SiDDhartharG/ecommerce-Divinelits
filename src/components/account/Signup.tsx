@@ -52,11 +52,10 @@ const Signup = () => {
     <section className="flex items-center justify-center w-full pt-12 xs:h-80vh">
       <form
         onSubmit={handleSubmit}
-        className="p-6 xs:p-10 w-full max-w-350 flex flex-col justify-between items-center gap-2.5	
-                border border-solid border-[#2E2E2E] bg-[#0A0A0A] rounded-md"
+        className="elegant-card p-6 xs:p-10 w-full max-w-md flex flex-col justify-between items-center gap-4"
       >
         {error && (
-          <div className="text-[#FF6166] flex items-center justify-center gap-2">
+          <div className="text-error flex items-center justify-center gap-2 p-3 bg-error/10 rounded-lg border border-error/20">
             <svg
               data-testid="geist-icon"
               height="16"
@@ -75,34 +74,34 @@ const Signup = () => {
             <div className="text-sm">{error}</div>
           </div>
         )}
-        <h1 className="w-full mb-5 text-2xl font-bold">Signup</h1>
+        <h1 className="elegant-heading w-full mb-6 text-3xl text-center">Sign Up</h1>
 
-        <label className={labelStyles}>Fullname:</label>
+        <label className={`${labelStyles} elegant-text font-medium`}>Full Name:</label>
         <input
           type="text"
-          placeholder="Fullname"
-          className="w-full h-8 border text-[#A1A1A1] border-solid border-[#2E2E2E] bg-black py-1 px-2.5 rounded text-13"
+          placeholder="Enter your full name"
+          className="w-full h-12 border border-light rounded-lg px-4 text-base bg-card focus:border-primary focus:outline-none focus:ring-3 focus:ring-primary/10 transition-all"
           name="name"
         />
 
-        <label className={labelStyles}>Email:</label>
+        <label className={`${labelStyles} elegant-text font-medium`}>Email:</label>
         <input
           type="email"
-          placeholder="Email"
-          className="w-full h-8 text-[#A1A1A1] border border-solid border-[#2E2E2E] bg-black py-1 px-2.5 rounded text-13"
+          placeholder="Enter your email"
+          className="w-full h-12 border border-light rounded-lg px-4 text-base bg-card focus:border-primary focus:outline-none focus:ring-3 focus:ring-primary/10 transition-all"
           name="email"
         />
 
-        <label className={labelStyles}>Password:</label>
+        <label className={`${labelStyles} elegant-text font-medium`}>Password:</label>
         <div className="flex w-full">
           <input
             type={showPassword ? "text" : "password"}
-            placeholder="Password"
-            className="w-full h-8 text-[#A1A1A1] border border-solid border-[#2E2E2E] bg-black py-1 px-2.5 rounded-l  text-13"
+            placeholder="Enter your password"
+            className="w-full h-12 border border-light rounded-l-lg px-4 text-base bg-card border-r-0 focus:border-primary focus:outline-none transition-all"
             name="password"
           />
           <button
-            className="flex items-center text-[#A1A1A1] justify-center w-2/12 transition-all duration-150 border-[#2E2E2E] bg-black border-r border-solid rounded-r border-y ease hover:bg-[#1F1F1F]"
+            className="flex items-center justify-center w-12 h-12 transition-all border border-light rounded-r-lg bg-card border-l-0 hover:bg-primary/5 focus:outline-none focus:border-primary"
             onClick={() => setShowPassword(!showPassword)}
             type="button"
           >
@@ -142,30 +141,30 @@ const Signup = () => {
           </button>
         </div>
 
-        <label className={labelStyles}>Phone:</label>
+        <label className={`${labelStyles} elegant-text font-medium`}>Phone:</label>
         <input
           type="text"
-          placeholder="Phone (not required)"
-          className="w-full h-8 text-[#A1A1A1] border border-solid border-[#2E2E2E] py-1 px-2.5 rounded bg-black text-13"
+          placeholder="Phone number (optional)"
+          className="w-full h-12 border border-light rounded-lg px-4 text-base bg-card focus:border-primary focus:outline-none focus:ring-3 focus:ring-primary/10 transition-all"
           name="phone"
         />
 
         <button
-          className="w-full bg-black border border-solid border-[#2E2E2E] py-1.5 mt-2.5 rounded transition-all hover:bg-[#1F1F1F] hover:border-[#454545] text-13"
+          className="elegant-button w-full mt-4 h-12 text-base font-semibold"
           type="submit"
         >
-          Signup
+          Sign Up
         </button>
 
-        <div className="relative flex items-center justify-center w-full h-10">
-          <div className="absolute w-full h-px top-2/4 bg-[#2E2E2E]"></div>
-          <p className="z-10 flex items-center justify-center w-8 h-6 bg-background-secondary">
+        <div className="relative flex items-center justify-center w-full h-10 my-4">
+          <div className="absolute w-full h-px top-2/4 bg-border-light"></div>
+          <p className="z-10 flex items-center justify-center px-4 h-6 bg-card elegant-text">
             or
           </p>
         </div>
 
         <button
-          className="flex text-[#A1A1A1] items-center gap-3 px-4 py-2 text-sm align-middle transition-all bg-black border border-solid rounded border-border-primary ease hover:bg-[#1F1F1F] hover:border-[#454545]"
+          className="flex items-center justify-center gap-3 w-full px-4 py-3 text-base align-middle transition-all border border-light rounded-lg bg-card hover:bg-primary/5 hover:border-primary focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/10"
           onClick={() => signIn("google")}
           type="button"
         >
@@ -194,13 +193,13 @@ const Signup = () => {
               fill="#EA4335"
             ></path>
           </svg>
-          Sign in with Google
+          Sign up with Google
         </button>
         <Link
           href="/login"
-          className="text-sm transition-all duration-150 text-[#A1A1A1] ease hover:text-white"
+          className="text-sm mt-4 elegant-text hover:text-primary transition-colors"
         >
-          Already have an account?
+          Already have an account? <span className="text-primary font-medium">Sign in here</span>
         </Link>
       </form>
     </section>

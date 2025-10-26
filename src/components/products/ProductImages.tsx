@@ -37,8 +37,8 @@ export const ProductImages = ({ name, selectedVariant }: ProductImages) => {
                 <Images
                   image={[image]}
                   name={`${name} ${selectedVariant.color} - Image ${index + 1}`}
-                  width={384}
-                  height={576}
+                  width={400}
+                  height={400}
                   priority={index === 0 ? true : false}
                   sizes="(max-width: 994px) 100vw,
                   (max-width: 1304px) 50vw,
@@ -60,8 +60,8 @@ export const ProductImages = ({ name, selectedVariant }: ProductImages) => {
             <Images
               image={[image]}
               name={`${name} ${selectedVariant.color} - Image ${index + 1}`}
-              width={850}
-              height={1275}
+              width={400}
+              height={400}
               priority={true}
               sizes="(max-width: 1024px) 100vw,
               (max-width: 1300px) 50vw,

@@ -57,7 +57,8 @@ const ButtonCheckout = ({ cartWithProducts, session }: ButtonCheckoutProps) => {
   return (
     <button
       onClick={() => startTransition(buyProducts)}
-      className="w-full text-sm p-2.5 h-full transition-all hover:bg-color-secondary"
+      className="w-full text-sm p-4 h-full font-semibold text-white bg-primary hover:bg-primary-dark transition-all duration-200 elegant-button"
+      disabled={isPending}
     >
       {isPending ? <Loader height={20} width={20} /> : "Continue"}
     </button>

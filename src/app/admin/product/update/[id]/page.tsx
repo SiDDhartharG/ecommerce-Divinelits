@@ -13,9 +13,17 @@ export default function UpdateProductPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [product, setProduct] = useState<any>(null);
+  const [price, setPrice] = useState<number>(0);
+  const [discount, setDiscount] = useState<number>(0);
   const [variants, setVariants] = useState([{ priceId: "", color: "", images: [""] }]);
   const [sizes, setSizes] = useState([""]);
   const [images, setImages] = useState([""]);
+
+  // Calculate discounted price
+  const calculateDiscountedPrice = (originalPrice: number, discountPercent: number) => {
+    if (!originalPrice || !discountPercent) return originalPrice;
+    return originalPrice - (originalPrice * discountPercent / 100);
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -23,6 +31,8 @@ export default function UpdateProductPage() {
         const productData = await getProductForAdmin(productId);
         if (productData) {
           setProduct(productData);
+          setPrice(productData.price || 0);
+          setDiscount(productData.discount || 0);
           setVariants(productData.variants || [{ priceId: "", color: "", images: [""] }]);
           setSizes(productData.sizes || [""]);
           setImages(productData.image || [""]);
@@ -48,11 +58,25 @@ export default function UpdateProductPage() {
 
   const updateVariant = (index: number, field: string, value: string) => {
     const updated = [...variants];
-    if (field === "images") {
-      updated[index].images = value.split(",").map(img => img.trim());
-    } else {
-      updated[index] = { ...updated[index], [field]: value };
-    }
+    updated[index] = { ...updated[index], [field]: value };
+    setVariants(updated);
+  };
+
+  const addVariantImage = (variantIndex: number) => {
+    const updated = [...variants];
+    updated[variantIndex].images = [...updated[variantIndex].images, ""];
+    setVariants(updated);
+  };
+
+  const removeVariantImage = (variantIndex: number, imageIndex: number) => {
+    const updated = [...variants];
+    updated[variantIndex].images = updated[variantIndex].images.filter((_, i) => i !== imageIndex);
+    setVariants(updated);
+  };
+
+  const updateVariantImage = (variantIndex: number, imageIndex: number, value: string) => {
+    const updated = [...variants];
+    updated[variantIndex].images[imageIndex] = value;
     setVariants(updated);
   };
 
@@ -161,10 +185,47 @@ export default function UpdateProductPage() {
                 name="price"
                 id="price"
                 step="0.01"
-                defaultValue={product.price}
+                value={price}
+                onChange={(e) => setPrice(parseFloat(e.target.value) || 0)}
                 required
                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               />
+            </div>
+
+            <div>
+              <label htmlFor="discount" className="block text-sm font-medium text-gray-700 mb-1">
+                Discount Percentage (0-100)
+              </label>
+              <input
+                type="number"
+                name="discount"
+                id="discount"
+                min="0"
+                max="100"
+                step="0.01"
+                value={discount}
+                onChange={(e) => setDiscount(parseFloat(e.target.value) || 0)}
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              />
+              {price > 0 && discount > 0 && (
+                <div className="mt-3 p-3 bg-gray-50 border border-gray-200 rounded-md">
+                  <div className="text-sm text-gray-600 mb-1">Price Preview:</div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-lg font-semibold text-red-600">
+                      ₹{calculateDiscountedPrice(price, discount).toFixed(2)}
+                    </span>
+                    <span className="text-sm text-gray-500 line-through">
+                      ₹{price.toFixed(2)}
+                    </span>
+                    <span className="px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-full">
+                      -{discount}% OFF
+                    </span>
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    You save ₹{(price - calculateDiscountedPrice(price, discount)).toFixed(2)}
+                  </div>
+                </div>
+              )}
             </div>
 
             <div>
@@ -334,16 +395,36 @@ export default function UpdateProductPage() {
                   </div>
                 </div>
                 <div className="mt-4">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Variant Images *
                   </label>
-                  <input
-                    type="text"
-                    value={variant.images.join(", ")}
-                    onChange={(e) => updateVariant(index, "images", e.target.value)}
-                    placeholder="Comma-separated image URLs"
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                  />
+                  {variant.images.map((image, imageIndex) => (
+                    <div key={imageIndex} className="flex items-center space-x-2 mb-2">
+                      <input
+                        type="url"
+                        value={image}
+                        onChange={(e) => updateVariantImage(index, imageIndex, e.target.value)}
+                        placeholder="Image URL"
+                        className="flex-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      />
+                      {variant.images.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeVariantImage(index, imageIndex)}
+                          className="text-red-600 hover:text-red-800"
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => addVariantImage(index)}
+                    className="text-blue-600 hover:text-blue-800 text-sm"
+                  >
+                    + Add Variant Image
+                  </button>
                 </div>
               </div>
             ))}

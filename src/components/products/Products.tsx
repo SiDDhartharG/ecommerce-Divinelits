@@ -55,20 +55,20 @@ export const Products = async ({
         } = product;
         const productLink = `/${category}/${quantity ? productId : _id}`;
         const containerClassname = [
-          "flex justify-between border border-solid border rounded-md overflow-hidden",
+          "flex justify-between border border-solid border-border-light rounded-md overflow-hidden shadow-sm bg-card",
           extraClassname === "cart-ord-mobile"
-            ? "flex-row sm:flex-col"
+            ? "flex-row sm:flex-col mb-4"
             : "flex-col",
         ]
           .filter(Boolean)
           .join(" ");
         const linkClassname =
           extraClassname === "cart-ord-mobile"
-            ? "w-6/12 sm:w-full hover:scale-105 transition-all"
+            ? "w-5/12 sm:w-full hover:scale-105 transition-all flex-shrink-0"
             : "hover:scale-105 transition-all";
         const infoClassname = [
-          extraClassname === "cart-ord-mobile" ? "w-6/12 sm:w-full" : "",
-          "flex justify-between flex-col gap-2.5 p-3.5 bg-bg z-10",
+          extraClassname === "cart-ord-mobile" ? "w-7/12 sm:w-full flex-1" : "",
+          "flex justify-between flex-col gap-3 p-4 bg-card z-10",
         ]
           .filter(Boolean)
           .join(" ");
@@ -79,20 +79,20 @@ export const Products = async ({
               <Images
                 image={image}
                 name={name}
-                width={280}
-                height={425}
+                width={400}
+                height={400}
                 priority={index === 0}
                 sizes="(max-width: 640px) 100vw, (max-width: 1154px) 33vw, (max-width: 1536px) 25vw, 20vw"
               />
             </Link>
             <div className={infoClassname}>
-              <div className="flex justify-between w-full">
-                <Link href={productLink} className="w-10/12">
-                  <h2 className="text-sm font-semibold truncate">{name}</h2>
+              <div className="flex justify-between items-start w-full mb-2">
+                <Link href={productLink} className="flex-1 pr-2">
+                  <h2 className="text-sm font-semibold leading-tight">{name}</h2>
                 </Link>
                 {quantity ? (
                   purchased ? (
-                    quantity > 1 && <span className="text-sm">{quantity}</span>
+                    quantity > 1 && <span className="text-sm font-medium">{quantity}</span>
                   ) : (
                     <DeleteButton product={product} />
                   )
@@ -105,8 +105,8 @@ export const Products = async ({
                 )}
               </div>
               {!purchased && (
-                <div className="text-sm">
-                  {quantity ? (price * quantity).toFixed(2) : price} €
+                <div className="text-base font-semibold text-primary mb-2">
+                  ₹{quantity ? (price * quantity).toFixed(2) : price}
                 </div>
               )}
               {quantity !== undefined && <ProductCartInfo product={product} />}

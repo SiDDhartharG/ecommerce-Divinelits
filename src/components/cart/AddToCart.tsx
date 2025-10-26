@@ -24,6 +24,11 @@ export default function AddToCart({
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [isPending, startTransition] = useTransition();
 
+  // Calculate the final price (with discount if applicable)
+  const finalPrice = product.discount 
+    ? product.price - (product.price * product.discount) / 100
+    : product.price;
+
   const handleAddToCart = useCallback(() => {
     if (!session) {
       toast.info(
@@ -45,64 +50,88 @@ export default function AddToCart({
         product._id,
         selectedSize,
         selectedVariant.priceId,
-        product.price
+        finalPrice // Use the calculated final price instead of original price
       );
     });
-  }, [session, selectedVariant, selectedSize, product, startTransition]);
+  }, [session, selectedVariant, selectedSize, product, finalPrice, startTransition]);
 
   return (
-    <>
-      <div className="p-5">
-        <div className="grid grid-cols-4 gap-2.5 justify-center">
+    <div className="space-y-6">
+      {/* Size Selection */}
+      <div>
+        <h3 className="text-sm font-medium text-text mb-3">Size</h3>
+        <div className="grid grid-cols-4 gap-2">
           {product.sizes.map((size, index) => (
             <button
               key={index}
-              className={`flex items-center justify-center border border-solid px-1 py-1.5 bg-black rounded transition duration-150 ease hover:border-primary text-13 ${
-                selectedSize === size ? "bg-white text-black" : ""
+              className={`flex items-center justify-center border border-border-light px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:border-primary ${
+                selectedSize === size 
+                  ? "bg-primary text-white border-primary" 
+                  : "bg-bg-card text-text hover:bg-bg"
               }`}
               onClick={() => setSelectedSize(size)}
             >
-              <span>{size}</span>
+              {size}
             </button>
           ))}
         </div>
-        <div className="grid grid-cols-auto-fill-32 gap-2.5 mt-5">
+      </div>
+
+      {/* Color Selection */}
+      <div>
+        <h3 className="text-sm font-medium text-text mb-3">Color</h3>
+        <div className="flex gap-3 flex-wrap">
           {product.variants.map((variant, index) => (
             <button
               key={index}
-              className={`border border-solid w-8 h-8 flex justify-center relative rounded transition duration-150 ease hover:border-primary ${
+              className={`relative w-10 h-10 rounded-full border-2 transition-all duration-200 hover:scale-110 ${
                 selectedVariant?.color === variant.color
-                  ? "border-primary"
-                  : ""
+                  ? "border-primary ring-2 ring-primary/20"
+                  : "border-border-light hover:border-primary"
               }`}
               style={{ backgroundColor: colorMapping[variant.color] }}
               onClick={() => {
                 setSelectedVariant(variant);
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              title={`Color ${variant.color}`}
+              title={`Color: ${variant.color}`}
             >
-              <span
-                className={
-                  selectedVariant?.color === variant.color
-                    ? "w-2.5 absolute bottom-selected h-px bg-white"
-                    : ""
-                }
-              />
+              {selectedVariant?.color === variant.color && (
+                <span className="absolute inset-0 flex items-center justify-center">
+                  <svg
+                    className="w-4 h-4 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </span>
+              )}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="border-t border-solid border">
-        <button
-          type="submit"
-          onClick={handleAddToCart}
-          className="w-full p-2 transition duration-150 text-13 ease hover:bg-text-light"
-        >
-          {isPending ? <Loader height={20} width={20} /> : "Add To Cart"}
-        </button>
-      </div>
-    </>
+      {/* Add to Cart Button */}
+      <button
+        type="submit"
+        onClick={handleAddToCart}
+        disabled={isPending}
+        className="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-6 rounded-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+      >
+        {isPending ? (
+          <>
+            <Loader height={20} width={20} />
+            Adding to Cart...
+          </>
+        ) : (
+          "Add To Cart"
+        )}
+      </button>
+    </div>
   );
 }

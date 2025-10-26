@@ -83,21 +83,21 @@ const ProductsCart = async ({ session }: { session: Session }) => {
 
   if (filteredCart && filteredCart?.length > 0) {
     return (
-      <div className="pt-12">
-        <h2 className="mb-5 text-xl font-bold sm:text-2xl">
+      <div className="pt-12 pb-28">
+        <h2 className="mb-8 text-xl font-bold sm:text-2xl elegant-heading">
           YOUR SHOPPING CART
         </h2>
         <Products products={filteredCart} extraClassname={"cart-ord-mobile"} />
 
-        <div className="fixed left-[50%] translate-x-[-50%] bottom-4 w-[90%] z-10 sm:w-[360px] rounded-xl overflow-hidden flex bg-black border border-solid border-border-primary h-min">
-          <div className="flex flex-col p-2.5 justify-center w-1/2 gap-2 text-center">
-            <div className="flex gap-2.5 justify-center text-sm">
+        <div className="fixed left-[50%] translate-x-[-50%] bottom-4 w-[90%] z-10 sm:w-[400px] rounded-xl overflow-hidden flex bg-card border border-border-light shadow-lg h-min">
+          <div className="flex flex-col p-4 justify-center w-1/2 gap-2 text-center bg-card">
+            <div className="flex gap-2.5 justify-center text-sm font-medium">
               <span>Total:</span>
-              <span>{totalPrice}€</span>
+              <span className="text-primary font-semibold">₹{totalPrice}</span>
             </div>
-            <span className="text-xs">+ TAX INCL.</span>
+            <span className="text-xs text-text-light">+ TAX INCL.</span>
           </div>
-          <div className="w-1/2 border-l border-solid bg-background-secondary border-border-primary">
+          <div className="w-1/2">
             <ButtonCheckout session={session} cartWithProducts={filteredCart} />
           </div>
         </div>

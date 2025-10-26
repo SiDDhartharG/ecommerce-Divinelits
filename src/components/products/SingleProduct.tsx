@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import AddToCart from "../cart/AddToCart";
+
 interface SingleProduct {
   product: string;
   session: Session | null;
@@ -23,78 +24,120 @@ export const SingleProduct = ({ product, session }: SingleProduct) => {
   );
 
   if (!product) {
-    return <div>Produnct not found</div>;
+    return <div>Product not found</div>;
   }
 
+  // Calculate discounted price
+  const originalPrice = productPlainObject.price;
+  const discount = productPlainObject.discount || 0;
+  const discountedPrice = originalPrice - (originalPrice * discount) / 100;
+  const hasDiscount = discount > 0;
+
   return (
-    <div className="flex flex-wrap justify-between gap-8">
-      <div className="grow-999 basis-0">
-        <ProductImages
-          name={productPlainObject.name}
-          selectedVariant={selectedVariant}
-        />
-      </div>
-
-      <div className="sticky flex flex-col items-center justify-center w-full h-full gap-5 grow basis-600 top-8">
-        <div className="w-full border border-solid rounded border-border-primary bg-background-secondary">
-          <div className="flex flex-col justify-between gap-3 p-5 border-b border-solid border-border-primary">
-            <h1 className="text-base font-semibold">
-              {productPlainObject.name}
-            </h1>
-            <span className="text-sm">{productPlainObject.price}€</span>
-            <p className="text-sm">{productPlainObject.description}</p>
-          </div>
-
-          <AddToCart
-            session={session}
-            product={productPlainObject}
+    <div className="container mx-auto px-4 py-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        {/* Product Images */}
+        <div className="w-full">
+          <ProductImages
+            name={productPlainObject.name}
             selectedVariant={selectedVariant}
-            setSelectedVariant={setSelectedVariant}
           />
         </div>
 
-        <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="item-1">
-            <AccordionTrigger className="text-sm">COMPOSITION</AccordionTrigger>
-            <AccordionContent>
-              <p>
-                We work with monitoring programmes to ensure compliance with our
-                social, environmental and health and safety standards for our
-                products. To assess compliance, we have developed a programme of
-                audits and continuous improvement plans.
-              </p>
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-2">
-            <AccordionTrigger className="text-sm">CARE</AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-2">
-              <p> Caring for your clothes is caring for the environment.</p>
-              <p>
-                Lower temperature washes and delicate spin cycles are gentler on
-                garments and help to protect the colour, shape and structure of
-                the fabric. Furthermore, they reduce the amount of energy used
-                in care processes.
-              </p>
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-3">
-            <AccordionTrigger className="text-sm">ORIGIN</AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-2">
-              <p>
-                We work with our suppliers, workers, unions and international
-                organisations to develop a supply chain in which human rights
-                are respected and promoted, contributing to the United Nations
-                Sustainable Development Goals.
-              </p>
-              <p>
-                Thanks to the collaboration with our suppliers, we work to know
-                the facilities and processes used to manufacture our products in
-                order to understand their traceability.
-              </p>
-              <p>Made in Portugal</p>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+        {/* Product Details */}
+        <div className="w-full lg:sticky lg:top-8 lg:self-start">
+          <div className="bg-bg-card border border-border-light rounded-lg shadow-sm overflow-hidden">
+            {/* Product Info Section */}
+            <div className="p-6 border-b border-border-light">
+              <h1 className="text-2xl lg:text-3xl font-bold text-text mb-4">
+                {productPlainObject.name}
+              </h1>
+              
+              {/* Price Section */}
+              <div className="mb-6">
+                {hasDiscount ? (
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className="text-3xl font-bold">
+                       ₹{discountedPrice.toFixed(0)}
+                    </span>
+                    <span className="text-sm text-text-light line-through">
+                      ₹{originalPrice}
+                    </span>
+                    <span className="bg-error/10 text-error text-sm font-semibold px-3 py-1 rounded-full">
+                      -{discount}% OFF
+                    </span>
+                  </div>
+                ) : (
+                  <span className="text-3xl font-bold text-text">
+                    ₹{originalPrice}
+                  </span>
+                )}
+              </div>
+
+              {/* Description */}
+              <div className="text-text-light leading-relaxed">
+                <p>{productPlainObject.description}</p>
+              </div>
+            </div>
+
+            {/* Add to Cart Section */}
+            <div className="p-6 bg-bg">
+              <AddToCart
+                session={session}
+                product={productPlainObject}
+                selectedVariant={selectedVariant}
+                setSelectedVariant={setSelectedVariant}
+              />
+            </div>
+          </div>
+
+          {/* Additional Product Details */}
+          <div className="mt-6">
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="details" className="border-border-light">
+                <AccordionTrigger className="text-left text-text hover:text-primary">
+                  Product Details
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-3 text-sm text-text-light">
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-text">Category:</span>
+                      <span className="capitalize">{productPlainObject.category}</span>
+                    </div>
+                    {productPlainObject.sizes && productPlainObject.sizes.length > 0 && (
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-text">Available Sizes:</span>
+                        <span>{productPlainObject.sizes.join(", ")}</span>
+                      </div>
+                    )}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="shipping" className="border-border-light">
+                <AccordionTrigger className="text-left text-text hover:text-primary">
+                  Shipping & Returns
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-3 text-sm text-text-light">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-success rounded-full flex-shrink-0"></span>
+                      <span>Free shipping on orders over ₹200</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></span>
+                      <span>Standard delivery: 3-5 business days</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></span>
+                        <span>30-day return policy (delivery charges will be deducted in case of return)</span>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
       </div>
     </div>
   );

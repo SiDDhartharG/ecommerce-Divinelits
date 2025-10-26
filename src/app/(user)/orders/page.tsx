@@ -78,9 +78,9 @@ const Orders = async () => {
             <h4 className="font-semibold">{`${format(
               order.purchaseDate,
               "dd LLL yyyy"
-            )} | ${(order.total_price / 100).toFixed(
+            )} | ₹${(order.total_price / 100).toFixed(
               2
-            )}€ | Items: ${order.products.reduce(
+            )} | Items: ${order.products.reduce(
               (total, product) => total + product.quantity,
               0
             )} `}</h4>

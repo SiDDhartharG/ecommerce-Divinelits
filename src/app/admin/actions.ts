@@ -32,7 +32,7 @@ export const getAllProductsForAdmin = async () => {
     const products = await Product.find().sort({ createdAt: -1 });
     return products;
   } catch (error) {
-    console.error("Error getting products for admin:", error);
+    console.log("Error getting products for admin:", error);
     throw new Error("Failed to fetch products");
   }
 };
@@ -44,9 +44,12 @@ export const getProductForAdmin = async (id: string) => {
     await connectDB();
 
     const product = await Product.findById(id);
-    return product;
+    if (!product) {
+      return null;
+    }
+    return product.toObject();
   } catch (error) {
-    console.error("Error getting product for admin:", error);
+    console.log("Error getting product for admin:", error);
     throw new Error("Failed to fetch product");
   }
 };
@@ -60,6 +63,7 @@ export const createProduct = async (formData: FormData) => {
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
     const price = parseFloat(formData.get("price") as string);
+    const discount = parseFloat(formData.get("discount") as string) || 0;
     const category = formData.get("category") as string;
     const status = formData.get("status") as ProductStatus;
     const sizes = JSON.parse(formData.get("sizes") as string);
@@ -70,6 +74,7 @@ export const createProduct = async (formData: FormData) => {
       name,
       description,
       price,
+      discount,
       category,
       status: status || ProductStatus.HIDE,
       sizes,
@@ -94,6 +99,7 @@ export const updateProduct = async (id: string, formData: FormData) => {
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
     const price = parseFloat(formData.get("price") as string);
+    const discount = parseFloat(formData.get("discount") as string) || 0;
     const category = formData.get("category") as string;
     const status = formData.get("status") as ProductStatus;
     const sizes = JSON.parse(formData.get("sizes") as string);
@@ -106,6 +112,7 @@ export const updateProduct = async (id: string, formData: FormData) => {
         name,
         description,
         price,
+        discount,
         category,
         status,
         sizes,
