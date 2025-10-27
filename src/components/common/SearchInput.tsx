@@ -35,7 +35,7 @@ const SearchInput = () => {
       <input
         placeholder="Search Products..."
         aria-label="Search"
-        className="w-full h-[40px] px-3 bg-white text-divine-text-500 text-sm focus:outline-none focus:ring-2 focus:ring-divine-gold-300 placeholder-divine-text-300"
+        className="w-full h-[40px] px-3 bg-white text-divine-text-500 text-sm border-0 placeholder-divine-text-300"
         type="search"
         defaultValue={searchParams.get("q")?.toString()}
         onChange={(e) => handleChange(e.target.value)}

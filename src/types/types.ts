@@ -1,16 +1,10 @@
 import { Document, Schema } from "mongoose";
 
-export enum ProductStatus {
-  VISIBLE = "VISIBLE",
-  DELETED = "DELETED",
-  HIDE = "HIDE"
-}
+// Import shared enums from constants
+import { ProductStatus, ProductCategory } from "../constants";
 
-export enum ProductCategory {
-  CANDLES = "candles",
-  GIFT_BOX = "gift box",
-  NAMED_GIFT = "named gift"
-}
+// Re-export for external use
+export { ProductStatus, ProductCategory };
 
 export interface EnrichedOrders {
   name: string;

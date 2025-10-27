@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { Session } from "next-auth";
 import { LinksDesktop } from "./LinksDesktop";
@@ -32,9 +33,10 @@ export const Navbar = ({ session, totalItemsCart, totalWishlists }: Navbar) => {
   };
 
   const linksData = [
-    { path: "/t-shirts", name: "T-SHIRTS" },
-    { path: "/pants", name: "PANTS" },
-    { path: "/sweatshirts", name: "SWEATSHIRTS" },
+    { path: "/candles", name: "CANDLES" },
+    { path: "/gift%20box", name: "GIFT SETS" },
+    { path: "/named%20gift", name: "NAMED GIFTS" },
+    { path: "/about", name: "ABOUT US" },
   ];
 
   const authLinks = () => {
@@ -117,9 +119,11 @@ export const Navbar = ({ session, totalItemsCart, totalWishlists }: Navbar) => {
       {/* Company Logo - Left Section */}
       <div className="flex items-center">
         <Link href="/" className="flex items-center space-x-3">
-          <img 
+          <Image
             src="/logo-2.png" 
             alt="DivineLits Custom Gifts & Candles" 
+            width={40}
+            height={40}
             className="h-10 w-auto"
           />
         </Link>

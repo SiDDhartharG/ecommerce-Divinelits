@@ -1,0 +1,17 @@
+User-agent: *
+
+# Disallow admin and API areas
+Disallow: /admin/
+Disallow: /api/
+
+# Disallow user-specific pages
+Disallow: /cart/
+Disallow: /wishlist/
+Disallow: /orders/
+
+# Disallow auth pages
+Disallow: /login/
+Disallow: /register/
+
+# Sitemap location
+Sitemap: https://divinelits.com/sitemap.xml
