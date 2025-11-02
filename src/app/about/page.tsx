@@ -126,7 +126,7 @@ const AboutPage = () => {
               </div>
             </div>
             <Link 
-              href="/candles"
+              href="/category/candles"
               className="inline-block bg-primary text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors duration-300 shadow-lg"
             >
               Experience DivineLits Today
@@ -151,7 +151,7 @@ const AboutPage = () => {
                 Contact Us
               </Link>
               <Link 
-                href="/candles"
+                href="/category/candles"
                 className="inline-block border-2 border-primary text-primary px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary hover:text-white transition-colors duration-300"
               >
                 Shop Collection

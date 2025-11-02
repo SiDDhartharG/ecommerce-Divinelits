@@ -1,37 +1,17 @@
 import Link from "next/link";
 import { Images } from "./Images";
 import { EnrichedProducts } from "@/types/types";
-import dynamic from "next/dynamic";
-import { Skeleton } from "../ui/skeleton";
-import { Wishlists, getTotalWishlist } from "@/app/(carts)/wishlist/action";
-import { Session, getServerSession } from "next-auth";
-import { authOptions } from "@/libs/auth";
 import { nameToSlug, categoryToSlug } from "@/libs/slugs";
 
-const WishlistButton = dynamic(() => import("../cart/WishlistButton"), {
-  loading: () => <Skeleton className="w-5 h-5" />,
-});
+interface ClientProductsProps {
+  products: EnrichedProducts[];
+  extraClassname?: string;
+}
 
-const DeleteButton = dynamic(() => import("../cart/DeleteButton"), {
-  loading: () => <Skeleton className="w-5 h-5" />,
-});
-
-const ProductCartInfo = dynamic(() => import("../cart/ProductCartInfo"), {
-  loading: () => <Skeleton className="w-24 h-8" />,
-});
-
-export const Products = async ({
+export const ClientProducts = ({
   products,
   extraClassname = "",
-}: {
-  products: EnrichedProducts[];
-  extraClassname: string;
-}) => {
-  const session: Session | null = await getServerSession(authOptions);
-  const hasMissingQuantity = products.some((product) => !product.quantity);
-  const wishlist =
-    hasMissingQuantity && session?.user ? await getTotalWishlist() : undefined;
-
+}: ClientProductsProps) => {
   const gridClassname = [
     "grid gap-x-3.5 gap-y-6 sm:gap-y-9",
     extraClassname === "colums-mobile" && "grid-cols-auto-fill-110",
@@ -91,18 +71,9 @@ export const Products = async ({
                 <Link href={productLink} className="flex-1 pr-2">
                   <h2 className="text-sm font-semibold leading-tight">{name}</h2>
                 </Link>
-                {quantity ? (
-                  purchased ? (
-                    quantity > 1 && <span className="text-sm font-medium">{quantity}</span>
-                  ) : (
-                    <DeleteButton product={product} />
-                  )
-                ) : (
-                  <WishlistButton
-                    session={session}
-                    productId={JSON.stringify(_id)}
-                    wishlistString={JSON.stringify(wishlist)}
-                  />
+                {/* Simplified for client-side - no wishlist/cart functionality */}
+                {quantity && purchased && quantity > 1 && (
+                  <span className="text-sm font-medium">{quantity}</span>
                 )}
               </div>
               {!purchased && (
@@ -110,7 +81,6 @@ export const Products = async ({
                   ₹{quantity ? (price * quantity).toFixed(2) : price}
                 </div>
               )}
-              {quantity !== undefined && <ProductCartInfo product={product} />}
             </div>
           </div>
         );

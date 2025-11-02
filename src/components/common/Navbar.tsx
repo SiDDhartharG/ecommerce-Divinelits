@@ -122,8 +122,8 @@ export const Navbar = ({ session, totalItemsCart, totalWishlists }: Navbar) => {
           <Image
             src="/logo-2.png" 
             alt="DivineLits Custom Gifts & Candles" 
-            width={40}
-            height={40}
+            width={100}
+            height={100}
             className="h-10 w-auto"
           />
         </Link>

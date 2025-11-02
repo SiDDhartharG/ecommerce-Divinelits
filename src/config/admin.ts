@@ -11,11 +11,6 @@ export const ADMIN_CONFIG = {
     "garg.sid6665@gmail.com"
   ],
   
-  // Admin dashboard settings
-  dashboard: {
-    title: "Admin Dashboard",
-    description: "Manage your ecommerce store"
-  }
 };
 
 /**

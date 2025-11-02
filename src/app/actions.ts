@@ -3,6 +3,7 @@
 import { connectDB } from "@/libs/mongodb";
 import { Product } from "@/models/Products";
 import { EnrichedProducts, ProductStatus } from "@/types/types";
+import { slugToName } from "@/libs/slugs";
 
 export const getAllProducts = async () => {
   try {
@@ -20,7 +21,7 @@ export const getCategoryProducts = async (category: string) => {
   try {
     await connectDB();
 
-    const products: EnrichedProducts[] = await Product.find({ category, status: ProductStatus.VISIBLE });
+const products: EnrichedProducts[] = await Product.find({category, status: ProductStatus.VISIBLE });
     return products;
   } catch (error) {
     console.error("Error getting products:", error);
@@ -61,5 +62,22 @@ export const getProduct = async (_id: string) => {
     return product;
   } catch (error) {
     console.error("Error getting product:", error);
+  }
+};
+
+export const getProductByName = async (productNameSlug: string) => {
+  try {
+    await connectDB();
+
+    // Convert slug back to product name
+    const productName = slugToName(productNameSlug);
+    const product = await Product.findOne({ 
+      name: { $regex: new RegExp(`^${productName}$`, 'i') }, // Case-insensitive exact match
+      status: ProductStatus.VISIBLE 
+    });
+    return product;
+  } catch (error) {
+    console.error("Error getting product by name:", error);
+    throw new Error("Failed to fetch product");
   }
 };

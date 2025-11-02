@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const { MONGODB_URI } = process.env;
+console.log(12323432345, "MONGO DB URL", MONGODB_URI);
 
 if (!MONGODB_URI) {
   throw new Error("MONGODB_URI must be defined");

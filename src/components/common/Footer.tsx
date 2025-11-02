@@ -52,7 +52,7 @@ export const Footer = () => {
             <h3 className={headingStyles}>Products</h3>
             <ul>
               <li className={liStyles}>
-                <Link href="/candles" className={linkStyles}>
+                <Link href="/category/candles" className={linkStyles}>
                   Premium Candles
                 </Link>
               </li>

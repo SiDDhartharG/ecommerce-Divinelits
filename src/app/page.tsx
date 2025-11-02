@@ -4,6 +4,8 @@ import MetaTags from "@/components/seo/MetaTags";
 import OurValues from "@/components/about/OurValues";
 import QualityPromise from "@/components/about/QualityPromise";
 import { Metadata } from "next";
+import { ProductCategory, ProductCategoryMetadata } from "@/constants/index";
+import { categoryToSlug } from "@/libs/slugs";
 
 export const metadata: Metadata = {
   title: "DivineLits - Premium Candles & Gifts for Every Occasion",
@@ -67,7 +69,7 @@ const Home = () => {
               Elegant candles and thoughtful gifts to light up your life.
             </p>
             <Link 
-              href="/candles"
+              href="/category/candles"
               className="inline-block bg-text text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-text-light transition-colors duration-300 shadow-lg"
             >
               Shop Now
@@ -82,59 +84,30 @@ const Home = () => {
             Categories
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Luxury Candles */}
-            <Link href="/candles" className="group cursor-pointer">
-              <div className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                <Image
-                  src="/candle-1.png"
-                  alt="Luxury Candles"
-                  width={400}
-                  height={400}
-                  className="w-full h-80 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-text/60 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 text-white">
-                  <h3 className="text-2xl font-bold mb-2">Luxury Candles</h3>
-                  <p className="text-primary/80">Premium handcrafted candles</p>
-                </div>
-              </div>
-            </Link>
-
-            {/* Gift Sets */}
-            <Link href="/gift%20box" className="group cursor-pointer">
-              <div className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                <Image
-                  src="/candle-2.png"
-                  alt="Gift Sets"
-                  width={400}
-                  height={400}
-                  className="w-full h-80 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-text/60 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 text-white">
-                  <h3 className="text-2xl font-bold mb-2">Gift Sets</h3>
-                  <p className="text-primary/80">Curated collections for special moments</p>
-                </div>
-              </div>
-            </Link>
-
-            {/* Named Gifts */}
-            <Link href="/named%20gift" className="group cursor-pointer">
-              <div className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                <Image
-                  src="/candle-3.png"
-                  alt="Named Gifts"
-                  width={400}
-                  height={400}
-                  className="w-full h-80 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-text/60 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 text-white">
-                  <h3 className="text-2xl font-bold mb-2">Named Gifts</h3>
-                  <p className="text-primary/80">Personalized gifts for loved ones</p>
-                </div>
-              </div>
-            </Link>
+            {Object.entries(ProductCategoryMetadata)
+              .slice(0, 3) // Limit to 3 categories
+              .map(([categoryKey, metadata]) => (
+                <Link 
+                  key={categoryKey}
+                  href={`/category/${categoryToSlug(categoryKey)}`} 
+                  className="group cursor-pointer"
+                >
+                  <div className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
+                    <Image
+                      src={metadata.image}
+                      alt={metadata.title}
+                      width={400}
+                      height={400}
+                      className="w-full h-80 object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-text/60 to-transparent"></div>
+                    <div className="absolute bottom-6 left-6 text-white">
+                      <h3 className="text-2xl font-bold mb-2">{metadata.title}</h3>
+                      <p className="text-primary/80">{metadata.description}</p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
           </div>
         </div>
       </section>
